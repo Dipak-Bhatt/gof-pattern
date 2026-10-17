@@ -1,0 +1,5 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="bridge-design-pattern/bridge-design-pattern.csproj" />
+  </Folder>
+</Solution>

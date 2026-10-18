@@ -6,6 +6,7 @@ A collection of Gang of Four (GoF) design patterns implemented in C# (.NET 10). 
 
 | Pattern | Location | Description |
 |---------|----------|-------------|
+| Adapter | `src/adapter-design-pattern/` | Lets two incompatible interfaces work together by wrapping one of them |
 | Bridge | `src/bridge-design-pattern/` | Decouples abstraction from implementation so both can vary independently |
 | Singleton | `src/singleton-design-pattern/` | Ensures a class has exactly one instance with a global point of access |
 
@@ -13,6 +14,7 @@ A collection of Gang of Four (GoF) design patterns implemented in C# (.NET 10). 
 
 ```
 src/
+├── adapter-design-pattern/     — Adapter pattern demo
 ├── bridge-design-pattern/      — Bridge pattern demo
 └── singleton-design-pattern/   — Singleton pattern demo
 ```
@@ -20,6 +22,9 @@ src/
 ## Running
 
 ```bash
+cd src/adapter-design-pattern
+dotnet run
+
 cd src/bridge-design-pattern
 dotnet run
 

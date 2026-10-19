@@ -51,25 +51,25 @@ dotnet run
 ```
 TARGET    IEmployeeReader      ReadAsync(int id)          what the client asks for
 ADAPTER   EmployeeReaderAdapter                            what fits them together
-ADAPTEE   IEmployeeDirectory    FindAsync(tenantId, id)   what rigo_hr speaks
+ADAPTEE   IEmployeeDirectory    FindAsync(tenantId, id)   what the database speaks
 
 --- Without an adapter the client would need the tenant too ---
     var employee = await directory.FindAsync(tenantId, id);   // ...and know it is keyed that way
 
 --- With the adapter the client only knows its own interface ---
   [Adapter] ReadAsync(42)  ->  FindAsync(11111111-1111-1111-1111-111111111111, 42)
-    [rigo_hr] SELECT * FROM hr.employee WHERE tenant_id = '11111111-1111-1111-1111-111111111111' AND id = 42
+    [db] SELECT * FROM hr.employee WHERE tenant_id = '11111111-1111-1111-1111-111111111111' AND id = 42
   Employee { Id = 42, Name = Ram Bahadur }
   [Adapter] ReadAsync(43)  ->  FindAsync(11111111-1111-1111-1111-111111111111, 43)
-    [rigo_hr] SELECT * FROM hr.employee WHERE tenant_id = '11111111-1111-1111-1111-111111111111' AND id = 43
+    [db] SELECT * FROM hr.employee WHERE tenant_id = '11111111-1111-1111-1111-111111111111' AND id = 43
   Employee { Id = 43, Name = Sita Sharma }
   [Adapter] ReadAsync(99)  ->  FindAsync(11111111-1111-1111-1111-111111111111, 99)
-    [rigo_hr] SELECT * FROM hr.employee WHERE tenant_id = '11111111-1111-1111-1111-111111111111' AND id = 99
+    [db] SELECT * FROM hr.employee WHERE tenant_id = '11111111-1111-1111-1111-111111111111' AND id = 99
   not found
 
 --- Same id, another tenant's adapter ---
   [Adapter] ReadAsync(42)  ->  FindAsync(99999999-9999-9999-9999-999999999999, 42)
-    [rigo_hr] SELECT * FROM hr.employee WHERE tenant_id = '99999999-9999-9999-9999-999999999999' AND id = 42
+    [db] SELECT * FROM hr.employee WHERE tenant_id = '99999999-9999-9999-9999-999999999999' AND id = 42
   Employee { Id = 42, Name = Someone Else }
 
 === Key Insight ===
@@ -109,7 +109,7 @@ public interface IEmployeeReader
 namespace AdapterDesignPattern;
 
 /// <summary>
-/// ADAPTEE — what <c>rigo_hr</c> speaks. A tenant row is keyed <c>(tenant_id, id)</c>, so a find
+/// ADAPTEE — what the database speaks. A tenant row is keyed <c>(tenant_id, id)</c>, so a find
 /// needs the tenant handed to it.
 /// </summary>
 public interface IEmployeeDirectory
@@ -159,7 +159,7 @@ public sealed class FakeDirectory : IEmployeeDirectory
 
     public Task<Employee?> FindAsync(Guid tenantId, int id)
     {
-        Console.WriteLine($"    [rigo_hr] SELECT * FROM hr.employee WHERE tenant_id = '{tenantId:D}' AND id = {id}");
+        Console.WriteLine($"    [db] SELECT * FROM hr.employee WHERE tenant_id = '{tenantId:D}' AND id = {id}");
         _rows.TryGetValue(tenantId, out var tenant);
         return Task.FromResult(tenant is not null && tenant.TryGetValue(id, out var employee) ? employee : null);
     }
@@ -184,7 +184,7 @@ IEmployeeReader reader = new EmployeeReaderAdapter(tenantId, directory);
 
 Console.WriteLine("TARGET    IEmployeeReader      ReadAsync(int id)          what the client asks for");
 Console.WriteLine("ADAPTER   EmployeeReaderAdapter                            what fits them together");
-Console.WriteLine("ADAPTEE   IEmployeeDirectory    FindAsync(tenantId, id)   what rigo_hr speaks\n");
+Console.WriteLine("ADAPTEE   IEmployeeDirectory    FindAsync(tenantId, id)   what the database speaks\n");
 
 Console.WriteLine("--- Without an adapter the client would need the tenant too ---");
 Console.WriteLine("    var employee = await directory.FindAsync(tenantId, id);   // ...and know it is keyed that way\n");

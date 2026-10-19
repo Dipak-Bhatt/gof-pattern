@@ -14,7 +14,7 @@ IEmployeeReader plain = new EmployeeReader();
 
 Console.WriteLine("--- Plain component ---");
 Console.WriteLine($"  {await plain.ReadAsync(42)}");
-Console.WriteLine($"  {await plain.ReadAsync(42)}   // read again: rigo_hr is hit twice\n");
+Console.WriteLine($"  {await plain.ReadAsync(42)}   // read again: the database is hit twice\n");
 
 Console.WriteLine("--- Wrapped with caching (outer) then auditing (inner) ---");
 IEmployeeReader cached = new CachingEmployeeReaderDecorator(plain);

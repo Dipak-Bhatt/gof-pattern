@@ -70,22 +70,22 @@ The client holds ONE interface, IEmployeeReader. It cannot tell a plain reader f
 a stack of decorators — that is the point of the pattern.
 
 --- Plain component ---
-    [rigo_hr] SELECT * FROM hr.employee WHERE id = 42
+    [db] SELECT * FROM hr.employee WHERE id = 42
   Employee { Id = 42, Name = Ram Bahadur }
-    [rigo_hr] SELECT * FROM hr.employee WHERE id = 42
-  Employee { Id = 42, Name = Ram Bahadur }   // read again: rigo_hr is hit twice
+    [db] SELECT * FROM hr.employee WHERE id = 42
+  Employee { Id = 42, Name = Ram Bahadur }   // read again: the database is hit twice
 
 --- Wrapped with caching (outer) then auditing (inner) ---
   [Audit] tenant=11111111-1111-1111-1111-111111111111 read id=42
   [Cache] MISS id=42 — asking the wrapped reader
-    [rigo_hr] SELECT * FROM hr.employee WHERE id = 42
+    [db] SELECT * FROM hr.employee WHERE id = 42
   Employee { Id = 42, Name = Ram Bahadur }
   [Audit] tenant=11111111-1111-1111-1111-111111111111 read id=42
   [Cache] HIT  id=42 -> Ram Bahadur
   Employee { Id = 42, Name = Ram Bahadur }   // read again: audited, served from cache
   [Audit] tenant=11111111-1111-1111-1111-111111111111 read id=99
   [Cache] MISS id=99 — asking the wrapped reader
-    [rigo_hr] SELECT * FROM hr.employee WHERE id = 99
+    [db] SELECT * FROM hr.employee WHERE id = 99
   not found
 
 --- Same stack, another tenant ---
@@ -161,13 +161,13 @@ namespace DecoratorDesignPattern;
 
 /// <summary>
 /// CONCRETE COMPONENT — the thing that actually reads. In production this is the repository the
-/// service already calls; here it is a fake <c>rigo_hr</c> read, so the demo is self-contained.
+/// service already calls; here it is a fake database read, so the demo is self-contained.
 /// </summary>
 public sealed class EmployeeReader : IEmployeeReader
 {
     public Task<Employee?> ReadAsync(int id)
     {
-        Console.WriteLine($"    [rigo_hr] SELECT * FROM hr.employee WHERE id = {id}");
+        Console.WriteLine($"    [db] SELECT * FROM hr.employee WHERE id = {id}");
         var found = id is 42 or 43;
         return Task.FromResult<Employee?>(found ? new Employee(id, id == 42 ? "Ram Bahadur" : "Sita Sharma") : null);
     }
@@ -276,7 +276,7 @@ public interface INotificationSender
 namespace DecoratorDesignPattern;
 
 /// <summary>
-/// CONCRETE COMPONENT — writes the intent to <c>workhorse_outbox</c> in <c>rigo_hr</c> (ADR-0012).
+/// CONCRETE COMPONENT — writes the intent to the outbox table.
 /// Fails the first time for an intent to make the retry decorator visible.
 /// </summary>
 public sealed class OutboxNotificationSender : INotificationSender
@@ -398,7 +398,7 @@ IEmployeeReader plain = new EmployeeReader();
 
 Console.WriteLine("--- Plain component ---");
 Console.WriteLine($"  {await plain.ReadAsync(42)}");
-Console.WriteLine($"  {await plain.ReadAsync(42)}   // read again: rigo_hr is hit twice\n");
+Console.WriteLine($"  {await plain.ReadAsync(42)}   // read again: the database is hit twice\n");
 
 Console.WriteLine("--- Wrapped with caching (outer) then auditing (inner) ---");
 IEmployeeReader cached = new CachingEmployeeReaderDecorator(plain);

@@ -1,7 +1,7 @@
 namespace DecoratorDesignPattern;
 
 /// <summary>
-/// CONCRETE COMPONENT — writes the intent to <c>workhorse_outbox</c> in <c>rigo_hr</c> (ADR-0012).
+/// CONCRETE COMPONENT — writes the intent to the outbox table.
 /// Fails the first time for an intent to make the retry decorator visible.
 /// </summary>
 public sealed class OutboxNotificationSender : INotificationSender

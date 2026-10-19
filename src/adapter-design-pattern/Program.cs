@@ -13,7 +13,7 @@ IEmployeeReader reader = new EmployeeReaderAdapter(tenantId, directory);
 
 Console.WriteLine("TARGET    IEmployeeReader      ReadAsync(int id)          what the client asks for");
 Console.WriteLine("ADAPTER   EmployeeReaderAdapter                            what fits them together");
-Console.WriteLine("ADAPTEE   IEmployeeDirectory    FindAsync(tenantId, id)   what rigo_hr speaks\n");
+Console.WriteLine("ADAPTEE   IEmployeeDirectory    FindAsync(tenantId, id)   what the database speaks\n");
 
 Console.WriteLine("--- Without an adapter the client would need the tenant too ---");
 Console.WriteLine("    var employee = await directory.FindAsync(tenantId, id);   // ...and know it is keyed that way\n");

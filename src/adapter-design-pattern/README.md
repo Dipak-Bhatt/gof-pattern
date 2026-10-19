@@ -95,7 +95,7 @@ namespace AdapterDesignPattern;
 
 /// <summary>
 /// TARGET — what the client asks for. An id and nothing else: the tenant is already implied by the
-/// connection, the way every service in RigoHR was written before its tables moved to PostgreSQL.
+/// connection, the way every service was written before its tables moved to PostgreSQL.
 /// </summary>
 public interface IEmployeeReader
 {
@@ -201,7 +201,7 @@ Console.WriteLine($"  {await otherReader.ReadAsync(42)}");
 Console.WriteLine("\n=== Key Insight ===");
 Console.WriteLine("Two interfaces that do not fit each other, and one object that fits them together.");
 Console.WriteLine("Neither side is edited and neither knows the other exists, so the client never");
-Console.WriteLine("carries the adaptee's key shape. Production: PortedRepository<T> in RigoHR, and");
+Console.WriteLine("carries the adaptee's key shape. Production: PortedRepository<T>, and");
 Console.WriteLine("NotifyInboxCompat for the feed the mobile apps read — the same shape, one method here.");
 ```
 
@@ -214,4 +214,4 @@ Think of a travel power adapter. Your laptop plug (the target) has two prongs; t
 - A class needs to use an existing collaborator whose interface does not match what it calls
 - You want to reuse a class without editing it — it is foreign, generated, or frozen
 - You are introducing a new dependency behind the interfaces your code already speaks, so the swap is invisible to callers
-- You are bridging two systems that were built against different contracts (the RigoHR case: SQL Server per-tenant services in front of a shared, tenant-keyed PostgreSQL database)
+- You are bridging two systems that were built against different contracts (the real-world case: SQL Server per-tenant services in front of a shared, tenant-keyed PostgreSQL database)

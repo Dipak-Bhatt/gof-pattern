@@ -51,25 +51,25 @@ dotnet run
 ```
 TARGET    IEmployeeReader      ReadAsync(int id)          what the client asks for
 ADAPTER   EmployeeReaderAdapter                            what fits them together
-ADAPTEE   IEmployeeDirectory    FindAsync(tenantId, id)   what rigo_hr speaks
+ADAPTEE   IEmployeeDirectory    FindAsync(tenantId, id)   what the database speaks
 
 --- Without an adapter the client would need the tenant too ---
     var employee = await directory.FindAsync(tenantId, id);   // ...and know it is keyed that way
 
 --- With the adapter the client only knows its own interface ---
   [Adapter] ReadAsync(42)  ->  FindAsync(11111111-1111-1111-1111-111111111111, 42)
-    [rigo_hr] SELECT * FROM hr.employee WHERE tenant_id = '11111111-1111-1111-1111-111111111111' AND id = 42
+    [db] SELECT * FROM hr.employee WHERE tenant_id = '11111111-1111-1111-1111-111111111111' AND id = 42
   Employee { Id = 42, Name = Ram Bahadur }
   [Adapter] ReadAsync(43)  ->  FindAsync(11111111-1111-1111-1111-111111111111, 43)
-    [rigo_hr] SELECT * FROM hr.employee WHERE tenant_id = '11111111-1111-1111-1111-111111111111' AND id = 43
+    [db] SELECT * FROM hr.employee WHERE tenant_id = '11111111-1111-1111-1111-111111111111' AND id = 43
   Employee { Id = 43, Name = Sita Sharma }
   [Adapter] ReadAsync(99)  ->  FindAsync(11111111-1111-1111-1111-111111111111, 99)
-    [rigo_hr] SELECT * FROM hr.employee WHERE tenant_id = '11111111-1111-1111-1111-111111111111' AND id = 99
+    [db] SELECT * FROM hr.employee WHERE tenant_id = '11111111-1111-1111-1111-111111111111' AND id = 99
   not found
 
 --- Same id, another tenant's adapter ---
   [Adapter] ReadAsync(42)  ->  FindAsync(99999999-9999-9999-9999-999999999999, 42)
-    [rigo_hr] SELECT * FROM hr.employee WHERE tenant_id = '99999999-9999-9999-9999-999999999999' AND id = 42
+    [db] SELECT * FROM hr.employee WHERE tenant_id = '99999999-9999-9999-9999-999999999999' AND id = 42
   Employee { Id = 42, Name = Someone Else }
 
 === Key Insight ===
@@ -95,7 +95,7 @@ namespace AdapterDesignPattern;
 
 /// <summary>
 /// TARGET — what the client asks for. An id and nothing else: the tenant is already implied by the
-/// connection, the way every service in RigoHR was written before its tables moved to PostgreSQL.
+/// connection, the way every service was written before its tables moved to PostgreSQL.
 /// </summary>
 public interface IEmployeeReader
 {
@@ -109,7 +109,7 @@ public interface IEmployeeReader
 namespace AdapterDesignPattern;
 
 /// <summary>
-/// ADAPTEE — what <c>rigo_hr</c> speaks. A tenant row is keyed <c>(tenant_id, id)</c>, so a find
+/// ADAPTEE — what the database speaks. A tenant row is keyed <c>(tenant_id, id)</c>, so a find
 /// needs the tenant handed to it.
 /// </summary>
 public interface IEmployeeDirectory
@@ -159,7 +159,7 @@ public sealed class FakeDirectory : IEmployeeDirectory
 
     public Task<Employee?> FindAsync(Guid tenantId, int id)
     {
-        Console.WriteLine($"    [rigo_hr] SELECT * FROM hr.employee WHERE tenant_id = '{tenantId:D}' AND id = {id}");
+        Console.WriteLine($"    [db] SELECT * FROM hr.employee WHERE tenant_id = '{tenantId:D}' AND id = {id}");
         _rows.TryGetValue(tenantId, out var tenant);
         return Task.FromResult(tenant is not null && tenant.TryGetValue(id, out var employee) ? employee : null);
     }
@@ -184,7 +184,7 @@ IEmployeeReader reader = new EmployeeReaderAdapter(tenantId, directory);
 
 Console.WriteLine("TARGET    IEmployeeReader      ReadAsync(int id)          what the client asks for");
 Console.WriteLine("ADAPTER   EmployeeReaderAdapter                            what fits them together");
-Console.WriteLine("ADAPTEE   IEmployeeDirectory    FindAsync(tenantId, id)   what rigo_hr speaks\n");
+Console.WriteLine("ADAPTEE   IEmployeeDirectory    FindAsync(tenantId, id)   what the database speaks\n");
 
 Console.WriteLine("--- Without an adapter the client would need the tenant too ---");
 Console.WriteLine("    var employee = await directory.FindAsync(tenantId, id);   // ...and know it is keyed that way\n");
@@ -201,7 +201,7 @@ Console.WriteLine($"  {await otherReader.ReadAsync(42)}");
 Console.WriteLine("\n=== Key Insight ===");
 Console.WriteLine("Two interfaces that do not fit each other, and one object that fits them together.");
 Console.WriteLine("Neither side is edited and neither knows the other exists, so the client never");
-Console.WriteLine("carries the adaptee's key shape. Production: PortedRepository<T> in RigoHR, and");
+Console.WriteLine("carries the adaptee's key shape. Production: PortedRepository<T>, and");
 Console.WriteLine("NotifyInboxCompat for the feed the mobile apps read — the same shape, one method here.");
 ```
 
@@ -214,4 +214,4 @@ Think of a travel power adapter. Your laptop plug (the target) has two prongs; t
 - A class needs to use an existing collaborator whose interface does not match what it calls
 - You want to reuse a class without editing it — it is foreign, generated, or frozen
 - You are introducing a new dependency behind the interfaces your code already speaks, so the swap is invisible to callers
-- You are bridging two systems that were built against different contracts (the RigoHR case: SQL Server per-tenant services in front of a shared, tenant-keyed PostgreSQL database)
+- You are bridging two systems that were built against different contracts (the real-world case: SQL Server per-tenant services in front of a shared, tenant-keyed PostgreSQL database)

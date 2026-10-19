@@ -1,7 +1,8 @@
 <Solution>
-  <Folder Name="/src/">
-    <Project Path="adapter-design-pattern/adapter-design-pattern.csproj" />
+  <Project Path="composite-design-pattern/composite-design-pattern.csproj" />
+ <Project Path="adapter-design-pattern/adapter-design-pattern.csproj" />
     <Project Path="bridge-design-pattern/bridge-design-pattern.csproj" />
+    <Project Path="decorator-design-pattern/decorator-design-pattern.csproj" />
+    <Project Path="facade-design-pattern/facade-design-pattern.csproj" />
     <Project Path="singleton-design-pattern/singleton-design-pattern.csproj" />
-  </Folder>
 </Solution>

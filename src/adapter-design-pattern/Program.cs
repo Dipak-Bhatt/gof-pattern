@@ -13,7 +13,7 @@ IEmployeeReader reader = new EmployeeReaderAdapter(tenantId, directory);
 
 Console.WriteLine("TARGET    IEmployeeReader      ReadAsync(int id)          what the client asks for");
 Console.WriteLine("ADAPTER   EmployeeReaderAdapter                            what fits them together");
-Console.WriteLine("ADAPTEE   IEmployeeDirectory    FindAsync(tenantId, id)   what rigo_hr speaks\n");
+Console.WriteLine("ADAPTEE   IEmployeeDirectory    FindAsync(tenantId, id)   what the database speaks\n");
 
 Console.WriteLine("--- Without an adapter the client would need the tenant too ---");
 Console.WriteLine("    var employee = await directory.FindAsync(tenantId, id);   // ...and know it is keyed that way\n");
@@ -30,5 +30,5 @@ Console.WriteLine($"  {await otherReader.ReadAsync(42)}");
 Console.WriteLine("\n=== Key Insight ===");
 Console.WriteLine("Two interfaces that do not fit each other, and one object that fits them together.");
 Console.WriteLine("Neither side is edited and neither knows the other exists, so the client never");
-Console.WriteLine("carries the adaptee's key shape. Production: PortedRepository<T> in RigoHR, and");
+Console.WriteLine("carries the adaptee's key shape. Production: PortedRepository<T>, and");
 Console.WriteLine("NotifyInboxCompat for the feed the mobile apps read — the same shape, one method here.");

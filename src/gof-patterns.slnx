@@ -5,5 +5,6 @@
     <Project Path="decorator-design-pattern/decorator-design-pattern.csproj" />
     <Project Path="facade-design-pattern/facade-design-pattern.csproj" />
     <Project Path="flyweight-design-pattern/flyweight-design-pattern.csproj" />
+    <Project Path="proxy-design-pattern/proxy-design-pattern.csproj" />
     <Project Path="singleton-design-pattern/singleton-design-pattern.csproj" />
 </Solution>

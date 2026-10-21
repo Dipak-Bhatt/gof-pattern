@@ -11,6 +11,7 @@ A collection of Gang of Four (GoF) design patterns implemented in C# (.NET 10). 
 | Composite | `src/composite-design-pattern/` | Treats individual objects and compositions uniformly via a tree structure |
 | Decorator | `src/decorator-design-pattern/` | Adds behaviour to an object by wrapping it in same-interface objects |
 | Facade | `src/facade-design-pattern/` | Provides one simple entry point over a group of subsystem calls |
+| Flyweight | `src/flyweight-design-pattern/` | Shares immutable state across many objects and passes the varying state in per call |
 | Singleton | `src/singleton-design-pattern/` | Ensures a class has exactly one instance with a global point of access |
 
 ## Structure
@@ -22,6 +23,7 @@ src/
 ├── composite-design-pattern/   — Composite pattern demo
 ├── decorator-design-pattern/   — Decorator pattern demo
 ├── facade-design-pattern/      — Facade pattern demo
+├── flyweight-design-pattern/   — Flyweight pattern demo
 └── singleton-design-pattern/   — Singleton pattern demo
 ```
 
@@ -41,6 +43,9 @@ cd src/decorator-design-pattern
 dotnet run
 
 cd src/facade-design-pattern
+dotnet run
+
+cd src/flyweight-design-pattern
 dotnet run
 
 cd src/singleton-design-pattern

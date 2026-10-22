@@ -11,6 +11,7 @@ A collection of Gang of Four (GoF) design patterns implemented in C# (.NET 10). 
 | Bridge | `src/bridge-design-pattern/` | Decouples abstraction from implementation so both can vary independently |
 | Builder | `src/builder-design-pattern/` | Assembles a complex immutable object step by step, validating before it is published |
 | Chain of Responsibility | `src/chain-of-responsibility-design-pattern/` | Passes a request along a chain of handlers until one answers it |
+| Command | `src/command-design-pattern/` | Turns each payroll step into an object — shown with immediate execution and with a background queue + worker |
 | Composite | `src/composite-design-pattern/` | Treats individual objects and compositions uniformly via a tree structure |
 | Decorator | `src/decorator-design-pattern/` | Adds behaviour to an object by wrapping it in same-interface objects |
 | Facade | `src/facade-design-pattern/` | Provides one simple entry point over a group of subsystem calls |
@@ -29,6 +30,7 @@ src/
 ├── bridge-design-pattern/      — Bridge pattern demo
 ├── builder-design-pattern/     — Builder pattern demo
 ├── chain-of-responsibility-design-pattern/ — Chain of Responsibility pattern demo
+├── command-design-pattern/     — Command pattern demo
 ├── composite-design-pattern/   — Composite pattern demo
 ├── decorator-design-pattern/   — Decorator pattern demo
 ├── facade-design-pattern/      — Facade pattern demo
@@ -55,6 +57,9 @@ cd src/builder-design-pattern
 dotnet run
 
 cd src/chain-of-responsibility-design-pattern
+dotnet run
+
+cd src/command-design-pattern
 dotnet run
 
 cd src/composite-design-pattern

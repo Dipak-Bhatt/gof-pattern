@@ -5,6 +5,7 @@
     <Project Path="bridge-design-pattern/bridge-design-pattern.csproj" />
     <Project Path="builder-design-pattern/builder-design-pattern.csproj" />
     <Project Path="chain-of-responsibility-design-pattern/chain-of-responsibility-design-pattern.csproj" />
+    <Project Path="command-design-pattern/command-design-pattern.csproj" />
     <Project Path="decorator-design-pattern/decorator-design-pattern.csproj" />
     <Project Path="facade-design-pattern/facade-design-pattern.csproj" />
     <Project Path="flyweight-design-pattern/flyweight-design-pattern.csproj" />

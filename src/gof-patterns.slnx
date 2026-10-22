@@ -3,6 +3,7 @@
   <Project Path="composite-design-pattern/composite-design-pattern.csproj" />
  <Project Path="adapter-design-pattern/adapter-design-pattern.csproj" />
     <Project Path="bridge-design-pattern/bridge-design-pattern.csproj" />
+    <Project Path="builder-design-pattern/builder-design-pattern.csproj" />
     <Project Path="decorator-design-pattern/decorator-design-pattern.csproj" />
     <Project Path="facade-design-pattern/facade-design-pattern.csproj" />
     <Project Path="flyweight-design-pattern/flyweight-design-pattern.csproj" />

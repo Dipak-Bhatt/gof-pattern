@@ -11,6 +11,7 @@ A collection of Gang of Four (GoF) design patterns implemented in C# (.NET 10). 
 | Composite | `src/composite-design-pattern/` | Treats individual objects and compositions uniformly via a tree structure |
 | Decorator | `src/decorator-design-pattern/` | Adds behaviour to an object by wrapping it in same-interface objects |
 | Facade | `src/facade-design-pattern/` | Provides one simple entry point over a group of subsystem calls |
+| Factory Method | `src/factory-design-pattern/` | Declares one creation method that returns a product interface and decides the concrete class per call |
 | Flyweight | `src/flyweight-design-pattern/` | Shares immutable state across many objects and passes the varying state in per call |
 | Proxy | `src/proxy-design-pattern/` | Stands in for an object with the same interface — routes a call to one of several subjects, or guards access to a protected one |
 | Singleton | `src/singleton-design-pattern/` | Ensures a class has exactly one instance with a global point of access |
@@ -24,6 +25,7 @@ src/
 ├── composite-design-pattern/   — Composite pattern demo
 ├── decorator-design-pattern/   — Decorator pattern demo
 ├── facade-design-pattern/      — Facade pattern demo
+├── factory-design-pattern/     — Factory Method pattern demo
 ├── flyweight-design-pattern/   — Flyweight pattern demo
 ├── proxy-design-pattern/       — Proxy pattern demo (Routing + Protection)
 └── singleton-design-pattern/   — Singleton pattern demo
@@ -45,6 +47,9 @@ cd src/decorator-design-pattern
 dotnet run
 
 cd src/facade-design-pattern
+dotnet run
+
+cd src/factory-design-pattern
 dotnet run
 
 cd src/flyweight-design-pattern

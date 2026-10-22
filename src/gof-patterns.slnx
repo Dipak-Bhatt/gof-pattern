@@ -7,4 +7,5 @@
     <Project Path="flyweight-design-pattern/flyweight-design-pattern.csproj" />
     <Project Path="proxy-design-pattern/proxy-design-pattern.csproj" />
     <Project Path="singleton-design-pattern/singleton-design-pattern.csproj" />
+    <Project Path="factory-design-pattern/factory-design-pattern.csproj" />
 </Solution>

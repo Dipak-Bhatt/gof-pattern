@@ -1,4 +1,5 @@
 <Solution>
+    <Project Path="abstract-factory-design-pattern/abstract-factory-design-pattern.csproj" />
   <Project Path="composite-design-pattern/composite-design-pattern.csproj" />
  <Project Path="adapter-design-pattern/adapter-design-pattern.csproj" />
     <Project Path="bridge-design-pattern/bridge-design-pattern.csproj" />

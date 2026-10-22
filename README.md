@@ -6,6 +6,7 @@ A collection of Gang of Four (GoF) design patterns implemented in C# (.NET 10). 
 
 | Pattern | Location | Description |
 |---------|----------|-------------|
+| Abstract Factory | `src/abstract-factory-design-pattern/` | Creates a family of related products for one variant, so the family can never be mixed |
 | Adapter | `src/adapter-design-pattern/` | Lets two incompatible interfaces work together by wrapping one of them |
 | Bridge | `src/bridge-design-pattern/` | Decouples abstraction from implementation so both can vary independently |
 | Composite | `src/composite-design-pattern/` | Treats individual objects and compositions uniformly via a tree structure |
@@ -20,6 +21,7 @@ A collection of Gang of Four (GoF) design patterns implemented in C# (.NET 10). 
 
 ```
 src/
+├── abstract-factory-design-pattern/ — Abstract Factory pattern demo
 ├── adapter-design-pattern/     — Adapter pattern demo
 ├── bridge-design-pattern/      — Bridge pattern demo
 ├── composite-design-pattern/   — Composite pattern demo
@@ -34,6 +36,9 @@ src/
 ## Running
 
 ```bash
+cd src/abstract-factory-design-pattern
+dotnet run
+
 cd src/adapter-design-pattern
 dotnet run
 

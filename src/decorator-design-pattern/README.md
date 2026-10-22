@@ -123,7 +123,7 @@ One component, many optional behaviours, composed at the call site. Each decorat
 implements the same interface and forwards to the one it wraps, so they stack in any
 order and the client never knows. In Scenario 2 the order matters: metrics on the
 outside counts the outcome once; metrics on the inside counts every retry attempt.
-Real home: an IRepository<T> or IHrNotifications wrapped with caching, audit, retry or
+Real home: an IRepository<T> or INotificationSender wrapped with caching, audit, retry or
 metrics without editing the component itself.
 ```
 
@@ -249,8 +249,7 @@ public sealed class AuditingEmployeeReaderDecorator(Guid tenantId, IEmployeeRead
 namespace DecoratorDesignPattern;
 
 /// <summary>
-/// The thing a sender is asked to hand on. Mirrors <c>NotificationIntent</c> in
-/// HR.Services/Notify/HrNotifications.cs: a type and an idempotency key, never an address.
+/// The thing a sender is asked to hand on: a type and an idempotency key, never an address.
 /// </summary>
 public record NotificationIntent(string Type, string IdempotencyKey);
 ```
@@ -261,8 +260,8 @@ public record NotificationIntent(string Type, string IdempotencyKey);
 namespace DecoratorDesignPattern;
 
 /// <summary>
-/// COMPONENT — the only interface the caller knows. Real shape: <c>IHrNotifications.SendAsync</c>
-/// answers false when an intent was refused or not written, never throws for a business failure.
+/// COMPONENT — the only interface the caller knows. It answers false when an intent was refused
+/// or not written, never throws for a business failure.
 /// </summary>
 public interface INotificationSender
 {
@@ -445,7 +444,7 @@ Console.WriteLine("One component, many optional behaviours, composed at the call
 Console.WriteLine("implements the same interface and forwards to the one it wraps, so they stack in any");
 Console.WriteLine("order and the client never knows. In Scenario 2 the order matters: metrics on the");
 Console.WriteLine("outside counts the outcome once; metrics on the inside counts every retry attempt.");
-Console.WriteLine("Real home: an IRepository<T> or IHrNotifications wrapped with caching, audit, retry or");
+Console.WriteLine("Real home: an IRepository<T> or INotificationSender wrapped with caching, audit, retry or");
 Console.WriteLine("metrics without editing the component itself.");
 
 // Walks in to the metrics decorator wherever it sits in the stack.
@@ -482,4 +481,4 @@ Think of a coffee. The espresso (component) is fixed. Milk, sugar and a shot of 
 
 ## Notes on This Repo
 
-The examples are grounded in a real HR domain (`apps/hr/api`): `IEmployeeReader` mirrors a repository read, and `INotificationSender` mirrors `IHrNotifications` in `HR.Services/Notify/HrNotifications.cs`. In the real codebase the decorator pattern is **not yet used**; these demos show where it fits — an `IRepository<T>` or `IHrNotifications` wrapped with caching, tenant audit, retry or metrics.
+The examples use a small employee domain: `IEmployeeReader` models a repository read, and `INotificationSender` models a notification intent. The decorator pattern is not mandatory for either; these demos show where it fits — an `IRepository<T>` or `INotificationSender` wrapped with caching, tenant audit, retry or metrics.

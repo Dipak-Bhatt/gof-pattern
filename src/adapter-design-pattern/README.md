@@ -129,10 +129,7 @@ namespace AdapterDesignPattern;
 /// </summary>
 /// <remarks>
 /// The client's <c>ReadAsync(42)</c> becomes <c>FindAsync(tenantId, 42)</c>. The tenant comes from
-/// here, not from the caller: in production the adapter reads the RLS-bound transaction's
-/// (<c>PortedRepository&lt;T&gt;</c>, HR.EntityFramework/Shared/Pg/PortedRepository.cs:42, and
-/// <c>HrPgRepository&lt;T&gt;.StampTenant</c> do the same), so a service cannot read another
-/// tenant's row even if it tries.
+/// here, not from the caller, so a service cannot read another tenant's row by mistake.
 /// </remarks>
 public sealed class EmployeeReaderAdapter(Guid tenantId, IEmployeeDirectory directory) : IEmployeeReader
 {
@@ -201,8 +198,7 @@ Console.WriteLine($"  {await otherReader.ReadAsync(42)}");
 Console.WriteLine("\n=== Key Insight ===");
 Console.WriteLine("Two interfaces that do not fit each other, and one object that fits them together.");
 Console.WriteLine("Neither side is edited and neither knows the other exists, so the client never");
-Console.WriteLine("carries the adaptee's key shape. Production: PortedRepository<T>, and");
-Console.WriteLine("NotifyInboxCompat for the feed the mobile apps read — the same shape, one method here.");
+Console.WriteLine("carries the adaptee's key shape: the adapter supplies the key, the client never does.");
 ```
 
 ## Real-World Analogy

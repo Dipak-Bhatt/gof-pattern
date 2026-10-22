@@ -30,5 +30,4 @@ Console.WriteLine($"  {await otherReader.ReadAsync(42)}");
 Console.WriteLine("\n=== Key Insight ===");
 Console.WriteLine("Two interfaces that do not fit each other, and one object that fits them together.");
 Console.WriteLine("Neither side is edited and neither knows the other exists, so the client never");
-Console.WriteLine("carries the adaptee's key shape. Production: PortedRepository<T>, and");
-Console.WriteLine("NotifyInboxCompat for the feed the mobile apps read — the same shape, one method here.");
+Console.WriteLine("carries the adaptee's key shape: the adapter supplies the key, the client never does.");

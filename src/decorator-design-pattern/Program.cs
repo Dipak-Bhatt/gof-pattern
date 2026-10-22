@@ -63,7 +63,7 @@ Console.WriteLine("One component, many optional behaviours, composed at the call
 Console.WriteLine("implements the same interface and forwards to the one it wraps, so they stack in any");
 Console.WriteLine("order and the client never knows. In Scenario 2 the order matters: metrics on the");
 Console.WriteLine("outside counts the outcome once; metrics on the inside counts every retry attempt.");
-Console.WriteLine("Real home: an IRepository<T> or IHrNotifications wrapped with caching, audit, retry or");
+Console.WriteLine("Real home: an IRepository<T> or INotificationSender wrapped with caching, audit, retry or");
 Console.WriteLine("metrics without editing the component itself.");
 
 // Walks in to the metrics decorator wherever it sits in the stack.

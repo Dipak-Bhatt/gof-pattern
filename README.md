@@ -17,6 +17,7 @@ A collection of Gang of Four (GoF) design patterns implemented in C# (.NET 10). 
 | Facade | `src/facade-design-pattern/` | Provides one simple entry point over a group of subsystem calls |
 | Factory Method | `src/factory-design-pattern/` | Declares one creation method that returns a product interface and decides the concrete class per call |
 | Flyweight | `src/flyweight-design-pattern/` | Shares immutable state across many objects and passes the varying state in per call |
+| Interpreter | `src/interpreter-design-pattern/` | Represents each rule of a small grammar as a class and evaluates the resulting expression tree |
 | Prototype | `src/prototype-design-pattern/` | Copies an existing object, including its whole child graph, instead of building a new one from scratch |
 | Proxy | `src/proxy-design-pattern/` | Stands in for an object with the same interface — routes a call to one of several subjects, or guards access to a protected one |
 | Singleton | `src/singleton-design-pattern/` | Ensures a class has exactly one instance with a global point of access |
@@ -36,6 +37,7 @@ src/
 ├── facade-design-pattern/      — Facade pattern demo
 ├── factory-design-pattern/     — Factory Method pattern demo
 ├── flyweight-design-pattern/   — Flyweight pattern demo
+├── interpreter-design-pattern/ — Interpreter pattern demo (formula evaluator)
 ├── prototype-design-pattern/   — Prototype pattern demo (deep copy)
 ├── proxy-design-pattern/       — Proxy pattern demo (Routing + Protection)
 └── singleton-design-pattern/   — Singleton pattern demo
@@ -75,6 +77,9 @@ cd src/factory-design-pattern
 dotnet run
 
 cd src/flyweight-design-pattern
+dotnet run
+
+cd src/interpreter-design-pattern
 dotnet run
 
 cd src/prototype-design-pattern

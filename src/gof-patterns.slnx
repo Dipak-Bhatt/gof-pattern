@@ -12,6 +12,7 @@
     <Project Path="interpreter-design-pattern/interpreter-design-pattern.csproj" />
     <Project Path="iterator-design-pattern/iterator-design-pattern.csproj" />
     <Project Path="mediator-design-pattern/mediator-design-pattern.csproj" />
+    <Project Path="memento-design-pattern/memento-design-pattern.csproj" />
     <Project Path="prototype-design-pattern/prototype-design-pattern.csproj" />
     <Project Path="proxy-design-pattern/proxy-design-pattern.csproj" />
     <Project Path="singleton-design-pattern/singleton-design-pattern.csproj" />
